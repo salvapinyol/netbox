@@ -167,7 +167,7 @@
         {% endif %}
     {% endwith %}
 
-    {% if perms.dcim.napalm_read_device and object.status == 'active' and object.primary_ip and object.platform.napalm_driver %}
+    {% if perms.dcim.napalm_read_device and object.status == 'active' and object.platform.napalm_driver %}
         {# NAPALM-enabled tabs #}
         <li role="presentation" class="nav-item">
             <a class="nav-link{% if active_tab == 'status' %} active{% endif %}" href="{% url 'dcim:device_status' pk=object.pk %}">
