@@ -1,11 +1,19 @@
 name: CI
-on: [push, pull_request]
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.9]
         node-version: [14.x]
     services:
       redis:
@@ -44,6 +52,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pycodestyle coverage
+        pip install django_extensions
         ln -s configuration.testing.py netbox/netbox/configuration.py
         yarn --cwd netbox/project-static
 
