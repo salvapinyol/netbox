@@ -166,7 +166,7 @@
             </li>
         {% endif %}
     {% endwith %}
-
+    {# Salva #}
     {% if perms.dcim.napalm_read_device and object.status == 'active' and object.platform.napalm_driver %}
         {# NAPALM-enabled tabs #}
         <li role="presentation" class="nav-item">

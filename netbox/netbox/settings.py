@@ -141,6 +141,7 @@ STORAGE_BACKEND = getattr(configuration, 'STORAGE_BACKEND', None)
 STORAGE_CONFIG = getattr(configuration, 'STORAGE_CONFIG', {})
 TIME_FORMAT = getattr(configuration, 'TIME_FORMAT', 'g:i a')
 TIME_ZONE = getattr(configuration, 'TIME_ZONE', 'UTC')
+DEF_COLUMN_TABLES = getattr(configuration, 'DEF_COLUMN_TABLES', {})  # Salva
 
 # Validate update repo URL and timeout
 if RELEASE_CHECK_URL:
@@ -329,7 +330,7 @@ INSTALLED_APPS = [
     'virtualization',
     'django_rq',  # Must come after extras to allow overriding management commands
     'drf_yasg',
-    'django_extensions'
+    'django_extensions'  # Salva
 ]
 
 # Middleware

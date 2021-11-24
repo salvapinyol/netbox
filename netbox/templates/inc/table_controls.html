@@ -10,7 +10,8 @@
     </div>
   </div>
   <div class="table-controls noprint col col-md-3 mb-0">
-    {% if request.user.is_authenticated and table_modal %}
+    {# Salva: Only admin can configure tables #}
+    {% if request.user.is_superuser and table_modal %}
       <div class="table-configure input-group input-group-sm">
         <button
           type="button"

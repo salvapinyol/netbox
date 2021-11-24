@@ -4,6 +4,7 @@ import sys
 import weakref
 
 
+# Salva
 def my_iter_all_python_module_files():
     # This is a hot path during reloading. Create a stable sorted list of
     # modules based on the module name and pass it to iter_modules_and_files().
@@ -20,7 +21,7 @@ def my_iter_all_python_module_files():
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "netbox.settings")
 
-    # MONKEY PATCHING: napalm import fails with django runserver
+    # Salva: MONKEY PATCHING: napalm import fails with django runserver
     from django.utils import autoreload
     autoreload.iter_all_python_module_files = my_iter_all_python_module_files
 

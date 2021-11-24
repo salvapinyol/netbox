@@ -1,0 +1,9 @@
+- Upgraded ci.yaml --> only test with python 3.9 and install django-extensions
+- manage.py --> napalm import fails with django web server
+- hack to run napalm without device having ip
+    netbox/templates/dcim/device/base.html
+    netbox/dcim/api/views.py
+- netbox/templates/inc/table_controls.html --> Only admin can configure tables
+- hack to configure default columns for each table:
+    settings.py --> added getting DEF_COLUMN_TABLES from configuration.py
+    netbox/utilities/tables.py --> read default tables from settings.DEF_COLUMN_TABLES
