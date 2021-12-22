@@ -235,6 +235,16 @@ table {
     }
   }
 
+  th.asc a::after {
+    content: "\f0140";
+    font-family: 'Material Design Icons';
+  }
+
+  th.desc a::after {
+    content: "\f0143";
+    font-family: 'Material Design Icons';
+  }
+
   &.table > :not(caption) > * > * {
     padding-right: $table-cell-padding-x-sm !important;
     padding-left: $table-cell-padding-x-sm !important;
@@ -727,10 +737,6 @@ nav.breadcrumb-container {
   }
 }
 
-div.paginator > form > div.input-group {
-  width: fit-content;
-}
-
 label.required {
   font-weight: $font-weight-bold;
 
@@ -890,14 +896,6 @@ div.card-overlay {
   }
 }
 
-// Right-align the paginator element.
-.paginator {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  padding: $spacer 0;
-}
-
 // Tabbed content
 .nav-tabs {
   .nav-link {
@@ -965,6 +963,17 @@ div.card-overlay {
 // Remove the max-width from image preview popovers as this is controlled on the image element.
 .popover.image-preview-popover {
   max-width: unset;
+}
+
+// Preformatted text blocks
+td pre {
+  margin-bottom: 0
+}
+pre.block {
+  padding: $spacer;
+  background-color: var(--nbx-pre-bg);
+  border: 1px solid var(--nbx-pre-border-color);
+  border-radius: $border-radius;
 }
 
 #django-messages {

@@ -1,6 +1,6 @@
 # The Python web framework on which NetBox is built
 # https://github.com/django/django
-Django
+Django<4.0
 
 # Django middleware which permits cross-domain API requests
 # https://github.com/OttoYiu/django-cors-headers
@@ -101,6 +101,14 @@ PyYAML
 # In-memory key/value store used for caching and queuing
 # https://github.com/andymccurdy/redis-py
 redis
+
+# Social authentication framework
+# https://github.com/python-social-auth/social-core
+social-auth-core[all]
+
+# Django app for social-auth-core
+# https://github.com/python-social-auth/social-app-django
+social-auth-app-django
 
 # SVG image rendering (used for rack elevations)
 # https://github.com/mozman/svgwrite

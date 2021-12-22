@@ -1,4 +1,5 @@
 import datetime
+import decimal
 import json
 import re
 from typing import Dict, Any
@@ -14,6 +15,7 @@ from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
 from markdown import markdown
 
+from netbox.config import get_config
 from utilities.forms import get_selected_values, TableConfigForm
 from utilities.markdown import StrikethroughExtension
 from utilities.utils import foreground_color
@@ -30,7 +32,7 @@ def placeholder(value):
     """
     Render a muted placeholder if value equates to False.
     """
-    if value:
+    if value not in ('', None):
         return value
     placeholder = '<span class="text-muted">&mdash;</span>'
     return mark_safe(placeholder)
@@ -41,7 +43,7 @@ def render_markdown(value):
     """
     Render text as Markdown
     """
-    schemes = '|'.join(settings.ALLOWED_URL_SCHEMES)
+    schemes = '|'.join(get_config().ALLOWED_URL_SCHEMES)
 
     # Strip HTML tags
     value = strip_tags(value)
@@ -51,7 +53,7 @@ def render_markdown(value):
     value = re.sub(pattern, '[\\1](\\3)', value, flags=re.IGNORECASE)
 
     # Sanitize Markdown reference links
-    pattern = fr'\[(.+)\]:\w?(?!({schemes})).*:(.+)'
+    pattern = fr'\[(.+)\]:\s*(?!({schemes}))\w*:(.+)'
     value = re.sub(pattern, '[\\1]: \\3', value, flags=re.IGNORECASE)
 
     # Render Markdown
@@ -173,6 +175,19 @@ def humanize_megabytes(mb):
 
 
 @register.filter()
+def simplify_decimal(value):
+    """
+    Return the simplest expression of a decimal value. Examples:
+      1.00 => '1'
+      1.20 => '1.2'
+      1.23 => '1.23'
+    """
+    if type(value) is not decimal.Decimal:
+        return value
+    return str(value).rstrip('0').rstrip('.')
+
+
+@register.filter()
 def tzoffset(value):
     """
     Returns the hour offset of a given time zone using the current time.
@@ -218,7 +233,7 @@ def fgcolor(value):
     value = value.lower().strip('#')
     if not re.match('^[0-9a-f]{6}$', value):
         return ''
-    return '#{}'.format(foreground_color(value))
+    return f'#{foreground_color(value)}'
 
 
 @register.filter()

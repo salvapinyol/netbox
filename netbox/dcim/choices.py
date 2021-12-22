@@ -174,6 +174,25 @@ class DeviceStatusChoices(ChoiceSet):
     }
 
 
+class DeviceAirflowChoices(ChoiceSet):
+
+    AIRFLOW_FRONT_TO_REAR = 'front-to-rear'
+    AIRFLOW_REAR_TO_FRONT = 'rear-to-front'
+    AIRFLOW_LEFT_TO_RIGHT = 'left-to-right'
+    AIRFLOW_RIGHT_TO_LEFT = 'right-to-left'
+    AIRFLOW_SIDE_TO_REAR = 'side-to-rear'
+    AIRFLOW_PASSIVE = 'passive'
+
+    CHOICES = (
+        (AIRFLOW_FRONT_TO_REAR, 'Front to rear'),
+        (AIRFLOW_REAR_TO_FRONT, 'Rear to front'),
+        (AIRFLOW_LEFT_TO_RIGHT, 'Left to right'),
+        (AIRFLOW_RIGHT_TO_LEFT, 'Right to left'),
+        (AIRFLOW_SIDE_TO_REAR, 'Side to rear'),
+        (AIRFLOW_PASSIVE, 'Passive'),
+    )
+
+
 #
 # ConsolePorts
 #
@@ -312,6 +331,7 @@ class PowerPortTypeChoices(ChoiceSet):
     TYPE_NEMA_L1560P = 'nema-l15-60p'
     TYPE_NEMA_L2120P = 'nema-l21-20p'
     TYPE_NEMA_L2130P = 'nema-l21-30p'
+    TYPE_NEMA_L2230P = 'nema-l22-30p'
     # California style
     TYPE_CS6361C = 'cs6361c'
     TYPE_CS6365C = 'cs6365c'
@@ -417,6 +437,7 @@ class PowerPortTypeChoices(ChoiceSet):
             (TYPE_NEMA_L1560P, 'NEMA L15-60P'),
             (TYPE_NEMA_L2120P, 'NEMA L21-20P'),
             (TYPE_NEMA_L2130P, 'NEMA L21-30P'),
+            (TYPE_NEMA_L2230P, 'NEMA L22-30P'),
         )),
         ('California Style', (
             (TYPE_CS6361C, 'CS6361C'),
@@ -533,6 +554,7 @@ class PowerOutletTypeChoices(ChoiceSet):
     TYPE_NEMA_L1560R = 'nema-l15-60r'
     TYPE_NEMA_L2120R = 'nema-l21-20r'
     TYPE_NEMA_L2130R = 'nema-l21-30r'
+    TYPE_NEMA_L2230R = 'nema-l22-30r'
     # California style
     TYPE_CS6360C = 'CS6360C'
     TYPE_CS6364C = 'CS6364C'
@@ -552,6 +574,7 @@ class PowerOutletTypeChoices(ChoiceSet):
     TYPE_ITA_M = 'ita-m'
     TYPE_ITA_N = 'ita-n'
     TYPE_ITA_O = 'ita-o'
+    TYPE_ITA_MULTISTANDARD = 'ita-multistandard'
     # USB
     TYPE_USB_A = 'usb-a'
     TYPE_USB_MICROB = 'usb-micro-b'
@@ -630,6 +653,7 @@ class PowerOutletTypeChoices(ChoiceSet):
             (TYPE_NEMA_L1560R, 'NEMA L15-60R'),
             (TYPE_NEMA_L2120R, 'NEMA L21-20R'),
             (TYPE_NEMA_L2130R, 'NEMA L21-30R'),
+            (TYPE_NEMA_L2230R, 'NEMA L22-30R'),
         )),
         ('California Style', (
             (TYPE_CS6360C, 'CS6360C'),
@@ -651,6 +675,7 @@ class PowerOutletTypeChoices(ChoiceSet):
             (TYPE_ITA_M, 'ITA Type M (BS 546)'),
             (TYPE_ITA_N, 'ITA Type N'),
             (TYPE_ITA_O, 'ITA Type O'),
+            (TYPE_ITA_MULTISTANDARD, 'ITA Multistandard'),
         )),
         ('USB', (
             (TYPE_USB_A, 'USB Type A'),
@@ -703,6 +728,7 @@ class InterfaceTypeChoices(ChoiceSet):
 
     # Virtual
     TYPE_VIRTUAL = 'virtual'
+    TYPE_BRIDGE = 'bridge'
     TYPE_LAG = 'lag'
 
     # Ethernet
@@ -763,7 +789,7 @@ class InterfaceTypeChoices(ChoiceSet):
     TYPE_16GFC_SFP_PLUS = '16gfc-sfpp'
     TYPE_32GFC_SFP28 = '32gfc-sfp28'
     TYPE_64GFC_QSFP_PLUS = '64gfc-qsfpp'
-    TYPE_128GFC_QSFP28 = '128gfc-sfp28'
+    TYPE_128GFC_QSFP28 = '128gfc-qsfp28'
 
     # InfiniBand
     TYPE_INFINIBAND_SDR = 'infiniband-sdr'
@@ -804,6 +830,7 @@ class InterfaceTypeChoices(ChoiceSet):
             'Virtual interfaces',
             (
                 (TYPE_VIRTUAL, 'Virtual'),
+                (TYPE_BRIDGE, 'Bridge'),
                 (TYPE_LAG, 'Link Aggregation Group (LAG)'),
             ),
         ),
@@ -1046,7 +1073,7 @@ class PortTypeChoices(ChoiceSet):
 
 
 #
-# Cables
+# Cables/links
 #
 
 class CableTypeChoices(ChoiceSet):
@@ -1110,7 +1137,7 @@ class CableTypeChoices(ChoiceSet):
     )
 
 
-class CableStatusChoices(ChoiceSet):
+class LinkStatusChoices(ChoiceSet):
 
     STATUS_CONNECTED = 'connected'
     STATUS_PLANNED = 'planned'

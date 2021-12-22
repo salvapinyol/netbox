@@ -61,7 +61,7 @@ class WebhookSerializer(ValidatedModelSerializer):
         fields = [
             'id', 'url', 'display', 'content_types', 'name', 'type_create', 'type_update', 'type_delete', 'payload_url',
             'enabled', 'http_method', 'http_content_type', 'additional_headers', 'body_template', 'secret',
-            'ssl_verification', 'ca_file_path',
+            'conditions', 'ssl_verification', 'ca_file_path',
         ]
 
 
@@ -150,7 +150,7 @@ class ImageAttachmentSerializer(ValidatedModelSerializer):
         model = ImageAttachment
         fields = [
             'id', 'url', 'display', 'content_type', 'object_id', 'parent', 'name', 'image', 'image_height',
-            'image_width', 'created',
+            'image_width', 'created', 'last_updated',
         ]
 
     def validate(self, data):
@@ -170,17 +170,7 @@ class ImageAttachmentSerializer(ValidatedModelSerializer):
 
     @swagger_serializer_method(serializer_or_field=serializers.DictField)
     def get_parent(self, obj):
-
-        # Static mapping of models to their nested serializers
-        if isinstance(obj.parent, Device):
-            serializer = NestedDeviceSerializer
-        elif isinstance(obj.parent, Rack):
-            serializer = NestedRackSerializer
-        elif isinstance(obj.parent, Site):
-            serializer = NestedSiteSerializer
-        else:
-            raise Exception("Unexpected type of parent object for ImageAttachment")
-
+        serializer = get_serializer_for_model(obj.parent, prefix='Nested')
         return serializer(obj.parent, context={'request': self.context['request']}).data
 
 

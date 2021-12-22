@@ -94,6 +94,12 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>Airflow</td>
+                            <td>
+                                {{ object.get_airflow_display|placeholder }}
+                            </td>
+                        </tr>
+                        <tr>
                             <th scope="row">Serial Number</th>
                             <td class="font-monospace">{{ object.serial|placeholder }}</td>
                         </tr>
@@ -142,6 +148,12 @@
                     </div>
                 </div>
             {% endif %}
+            {% include 'inc/panels/custom_fields.html' %}
+            {% include 'inc/panels/tags.html' %}
+            {% include 'inc/panels/comments.html' %}
+            {% plugin_left_page object %}
+        </div>
+        <div class="col col-md-6">
             <div class="card">
                 <h5 class="card-header">
                     Management
@@ -173,31 +185,31 @@
                         <tr>
                             <th scope="row">Primary IPv4</th>
                             <td>
-                                {% if object.primary_ip4 %}
-                                    <a href="{% url 'ipam:ipaddress' pk=object.primary_ip4.pk %}">{{ object.primary_ip4.address.ip }}</a>
-                                    {% if object.primary_ip4.nat_inside %}
-                                        <span>(NAT for {{ object.primary_ip4.nat_inside.address.ip }})</span>
-                                    {% elif object.primary_ip4.nat_outside %}
-                                        <span>(NAT: {{ object.primary_ip4.nat_outside.address.ip }})</span>
-                                    {% endif %}
-                                {% else %}
-                                    <span class="text-muted">&mdash;</span>
+                              {% if object.primary_ip4 %}
+                                <a href="{% url 'ipam:ipaddress' pk=object.primary_ip4.pk %}">{{ object.primary_ip4.address.ip }}</a>
+                                {% if object.primary_ip4.nat_inside %}
+                                  (NAT for <a href="{{ object.primary_ip4.nat_inside.get_absolute_url }})">{{ object.primary_ip4.nat_inside.address.ip }}</a>)
+                                {% elif object.primary_ip4.nat_outside %}
+                                  (NAT: <a href="{{ object.primary_ip4.nat_outside.get_absolute_url }}">{{ object.primary_ip4.nat_outside.address.ip }}</a>)
                                 {% endif %}
+                              {% else %}
+                                <span class="text-muted">&mdash;</span>
+                              {% endif %}
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">Primary IPv6</th>
                             <td>
-                                {% if object.primary_ip6 %}
-                                    <a href="{% url 'ipam:ipaddress' pk=object.primary_ip6.pk %}">{{ object.primary_ip6.address.ip }}</a>
-                                    {% if object.primary_ip6.nat_inside %}
-                                        <span>(NAT for {{ object.primary_ip6.nat_inside.address.ip }})</span>
-                                    {% elif object.primary_ip6.nat_outside %}
-                                        <span>(NAT: {{ object.primary_ip6.nat_outside.address.ip }})</span>
-                                    {% endif %}
-                                {% else %}
-                                    <span class="text-muted">&mdash;</span>
+                              {% if object.primary_ip6 %}
+                                <a href="{% url 'ipam:ipaddress' pk=object.primary_ip6.pk %}">{{ object.primary_ip6.address.ip }}</a>
+                                {% if object.primary_ip6.nat_inside %}
+                                  (NAT for <a href="{{ object.primary_ip6.nat_inside.get_absolute_url }}">{{ object.primary_ip6.nat_inside.address.ip }}</a>)
+                                {% elif object.primary_ip6.nat_outside %}
+                                  (NAT: <a href="{{ object.primary_ip6.nat_outside.get_absolute_url }}">{{ object.primary_ip6.nat_outside.address.ip }}</a>)
                                 {% endif %}
+                              {% else %}
+                                <span class="text-muted">&mdash;</span>
+                              {% endif %}
                             </td>
                         </tr>
                         {% if object.cluster %}
@@ -214,12 +226,6 @@
                     </table>
                 </div>
             </div>
-            {% include 'inc/custom_fields_panel.html' %}
-            {% include 'extras/inc/tags_panel.html' with tags=object.tags.all url='dcim:device_list' %}
-            {% include 'inc/comments_panel.html' %}
-            {% plugin_left_page object %}
-        </div>
-        <div class="col col-md-6">
             {% if object.powerports.exists and object.poweroutlets.exists %}
                 <div class="card">
                     <h5 class="card-header">
@@ -284,46 +290,14 @@
                 </div>
                 {% if perms.ipam.add_service %}
                 <div class="card-footer text-end noprint">
-                    <a href="{% url 'dcim:device_service_assign' device=object.pk %}" class="btn btn-sm btn-primary">
+                    <a href="{% url 'ipam:service_add' %}?device={{ object.pk }}" class="btn btn-sm btn-primary">
                         <span class="mdi mdi-plus-thick" aria-hidden="true"></span> Assign Service
                     </a>
                 </div>
                 {% endif %}
             </div>
-            {% include 'inc/image_attachments_panel.html' %}
-            <div class="card noprint">
-                <h5 class="card-header">
-                    Related Devices
-                </h5>
-                <div class="card-body">
-                    {% if related_devices %}
-                    <table class="table table-hover">
-                        <tr>
-                            <th>Device</th>
-                            <th>Rack</th>
-                            <th>Type</th>
-                        </tr>
-                        {% for rd in related_devices %}
-                        <tr>
-                            <td>
-                                <a href="{% url 'dcim:device' pk=rd.pk %}">{{ rd }}</a>
-                            </td>
-                            <td>
-                                {% if rd.rack %}
-                                    <a href="{% url 'dcim:rack' pk=rd.rack.pk %}">{{ rd.rack }}</a>
-                                {% else %}
-                                    <span class="text-muted">&mdash;</span>
-                                {% endif %}
-                            </td>
-                            <td>{{ rd.device_type }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                    {% else %}
-                    <div class="text-muted">None</div>
-                    {% endif %}
-                </div>
-            </div>
+            {% include 'inc/panels/contacts.html' %}
+            {% include 'inc/panels/image_attachments.html' %}
             {% plugin_right_page object %}
         </div>
     </div>

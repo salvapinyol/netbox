@@ -1,7 +1,6 @@
 from django.urls import path
 
 from extras.views import ObjectChangeLogView, ObjectJournalView
-from ipam.views import ServiceEditView
 from utilities.views import SlugRedirectView
 from . import views
 from .models import *
@@ -109,6 +108,14 @@ urlpatterns = [
     path('device-types/edit/', views.DeviceTypeBulkEditView.as_view(), name='devicetype_bulk_edit'),
     path('device-types/delete/', views.DeviceTypeBulkDeleteView.as_view(), name='devicetype_bulk_delete'),
     path('device-types/<int:pk>/', views.DeviceTypeView.as_view(), name='devicetype'),
+    path('device-types/<int:pk>/console-ports/', views.DeviceTypeConsolePortsView.as_view(), name='devicetype_consoleports'),
+    path('device-types/<int:pk>/console-server-ports/', views.DeviceTypeConsoleServerPortsView.as_view(), name='devicetype_consoleserverports'),
+    path('device-types/<int:pk>/power-ports/', views.DeviceTypePowerPortsView.as_view(), name='devicetype_powerports'),
+    path('device-types/<int:pk>/power-outlets/', views.DeviceTypePowerOutletsView.as_view(), name='devicetype_poweroutlets'),
+    path('device-types/<int:pk>/interfaces/', views.DeviceTypeInterfacesView.as_view(), name='devicetype_interfaces'),
+    path('device-types/<int:pk>/front-ports/', views.DeviceTypeFrontPortsView.as_view(), name='devicetype_frontports'),
+    path('device-types/<int:pk>/rear-ports/', views.DeviceTypeRearPortsView.as_view(), name='devicetype_rearports'),
+    path('device-types/<int:pk>/device-bays/', views.DeviceTypeDeviceBaysView.as_view(), name='devicetype_devicebays'),
     path('device-types/<int:pk>/edit/', views.DeviceTypeEditView.as_view(), name='devicetype_edit'),
     path('device-types/<int:pk>/delete/', views.DeviceTypeDeleteView.as_view(), name='devicetype_delete'),
     path('device-types/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='devicetype_changelog', kwargs={'model': DeviceType}),
@@ -226,7 +233,6 @@ urlpatterns = [
     path('devices/<int:pk>/grafana/', views.DeviceGrafanaView.as_view(), name='device_grafana'),  # Salva
     path('devices/<int:pk>/lldp-neighbors/', views.DeviceLLDPNeighborsView.as_view(), name='device_lldp_neighbors'),
     path('devices/<int:pk>/config/', views.DeviceConfigView.as_view(), name='device_config'),
-    path('devices/<int:device>/services/assign/', ServiceEditView.as_view(), name='device_service_assign'),
 
     # Console ports
     path('console-ports/', views.ConsolePortListView.as_view(), name='consoleport_list'),

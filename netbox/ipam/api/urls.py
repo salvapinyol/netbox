@@ -1,9 +1,15 @@
+from django.urls import path
+
 from netbox.api import OrderedDefaultRouter
+from ipam.models import IPRange, Prefix
 from . import views
 
 
 router = OrderedDefaultRouter()
 router.APIRootView = views.IPAMRootView
+
+# ASNs
+router.register('asns', views.ASNViewSet)
 
 # VRFs
 router.register('vrfs', views.VRFViewSet)
@@ -27,6 +33,10 @@ router.register('ip-ranges', views.IPRangeViewSet)
 # IP addresses
 router.register('ip-addresses', views.IPAddressViewSet)
 
+# FHRP groups
+router.register('fhrp-groups', views.FHRPGroupViewSet)
+router.register('fhrp-group-assignments', views.FHRPGroupAssignmentViewSet)
+
 # VLANs
 router.register('vlan-groups', views.VLANGroupViewSet)
 router.register('vlans', views.VLANViewSet)
@@ -35,4 +45,23 @@ router.register('vlans', views.VLANViewSet)
 router.register('services', views.ServiceViewSet)
 
 app_name = 'ipam-api'
-urlpatterns = router.urls
+
+urlpatterns = [
+    path(
+        'ip-ranges/<int:pk>/available-ips/',
+        views.IPRangeAvailableIPAddressesView.as_view(),
+        name='iprange-available-ips'
+    ),
+    path(
+        'prefixes/<int:pk>/available-prefixes/',
+        views.AvailablePrefixesView.as_view(),
+        name='prefix-available-prefixes'
+    ),
+    path(
+        'prefixes/<int:pk>/available-ips/',
+        views.PrefixAvailableIPAddressesView.as_view(),
+        name='prefix-available-ips'
+    ),
+]
+
+urlpatterns += router.urls
