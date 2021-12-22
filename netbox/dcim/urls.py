@@ -223,6 +223,7 @@ urlpatterns = [
     path('devices/<int:pk>/changelog/', views.DeviceChangeLogView.as_view(), name='device_changelog', kwargs={'model': Device}),
     path('devices/<int:pk>/journal/', views.DeviceJournalView.as_view(), name='device_journal', kwargs={'model': Device}),
     path('devices/<int:pk>/status/', views.DeviceStatusView.as_view(), name='device_status'),
+    path('devices/<int:pk>/grafana/', views.DeviceGrafanaView.as_view(), name='device_grafana'),  # Salva
     path('devices/<int:pk>/lldp-neighbors/', views.DeviceLLDPNeighborsView.as_view(), name='device_lldp_neighbors'),
     path('devices/<int:pk>/config/', views.DeviceConfigView.as_view(), name='device_config'),
     path('devices/<int:device>/services/assign/', ServiceEditView.as_view(), name='device_service_assign'),
@@ -303,6 +304,7 @@ urlpatterns = [
     path('interfaces/<int:pk>/edit/', views.InterfaceEditView.as_view(), name='interface_edit'),
     path('interfaces/<int:pk>/delete/', views.InterfaceDeleteView.as_view(), name='interface_delete'),
     path('interfaces/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='interface_changelog', kwargs={'model': Interface}),
+    path('interfaces/<int:pk>/grafana/', views.InterfaceGrafanaView.as_view(), name='interface_grafana'),  # Salva
     path('interfaces/<int:pk>/trace/', views.PathTraceView.as_view(), name='interface_trace', kwargs={'model': Interface}),
     path('interfaces/<int:termination_a_id>/connect/<str:termination_b_type>/', views.CableCreateView.as_view(), name='interface_connect', kwargs={'termination_a_type': Interface}),
     path('devices/interfaces/add/', views.DeviceBulkAddInterfaceView.as_view(), name='device_bulk_add_interface'),

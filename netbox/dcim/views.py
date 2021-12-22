@@ -2906,3 +2906,24 @@ class PowerFeedBulkDeleteView(generic.BulkDeleteView):
     queryset = PowerFeed.objects.prefetch_related('power_panel', 'rack')
     filterset = filtersets.PowerFeedFilterSet
     table = tables.PowerFeedTable
+
+
+# Salva
+class InterfaceGrafanaView(generic.ObjectView):
+    queryset = Interface.objects.all()
+    template_name = 'dcim/interface_grafana.html'
+
+    def get_extra_context(self, request, instance):
+        return {
+            'active_tab': 'grafana',
+        }
+
+
+class DeviceGrafanaView(generic.ObjectView):
+    queryset = Device.objects.all()
+    template_name = 'dcim/device/grafana.html'
+
+    def get_extra_context(self, request, instance):
+        return {
+            'active_tab': 'grafana',
+        }

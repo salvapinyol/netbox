@@ -60,7 +60,8 @@ class BaseTable(tables.Table):
         # Apply custom column ordering for user
         if user is not None and not isinstance(user, AnonymousUser):
             selected_columns = user.config.get(f"tables.{self.__class__.__name__}.columns")
-            selected_columns = settings.DEF_COLUMN_TABLES.get(f"{self.__class__.__name__}.columns")  # Salva
+            if not user.is_superuser:  # Salva. We don't allow regular users to customize table columns
+                selected_columns = settings.PLUGINS_CONFIG["portal"]["DEF_COLUMN_TABLES"].get(f"{self.__class__.__name__}.columns")
             if selected_columns:
 
                 # Show only persistent or selected columns

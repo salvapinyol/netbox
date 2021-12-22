@@ -1,0 +1,12 @@
+{% extends 'dcim/interface.html' %}
+{% load helpers %}
+
+{% block content %}
+    {% with preferences|get_key:'ui.colormode' as color_mode %}
+        {% comment %}
+            #FEATURE: quitar del menu que se pueda seleccionar light o dark porque no cuadra con grafana
+            #FEATURE: intentar hacer que no funciones ESC en el dashboard segun https://github.com/grafana/grafana/issues/13706
+        {% endcomment %}
+        <iframe id="grafanaframe" src="{{ settings.PLUGINS_CONFIG.portal.GRAFANA_URL }}/d/gfHysetGz/switches-flux?orgId=2&refresh=5m&var-itf_alias={{ object.description }}&var-host={{ object.device.name }}&var-ifName={{ object.name }}&kiosk=tv&from=now-24h&to=now&theme={% firstof color_mode 'light' %}" frameborder="0" height="700"></iframe>
+    {% endwith %}
+{% endblock %}

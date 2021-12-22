@@ -95,6 +95,11 @@
         </a>
     </li>
 
+    {# Salva #}
+    <li role="presentation" class="nav-item">
+        <a class="nav-link {% if active_tab == 'grafana' %} active{% endif %}" href="{% url 'dcim:device_grafana' pk=object.pk %}">Grafana</a>
+    </li>
+
     {% with interface_count=object.interfaces_count %}
         {% if interface_count %}
             <li role="presentation" class="nav-item">

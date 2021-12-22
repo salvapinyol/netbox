@@ -12,6 +12,16 @@
   {{ block.super }}
 {% endblock %}
 
+{# Salva #}
+{% block tab_items %}
+    <li class="nav-item" role="presentation">
+        <a class="nav-link{% if not active_tab %} active{% endif %}" href="{{ object.get_absolute_url }}">{{ object|meta:"verbose_name"|bettertitle }}</a>
+    </li>
+    <li role="presentation" class="nav-item">
+        <a class="nav-link {% if active_tab == 'grafana' %} active{% endif %}" href="{% url 'dcim:interface_grafana' pk=object.pk %}">Grafana</a>
+    </li>
+{% endblock tab_items %}
+
 {% block content %}
     <div class="row mb-3">
         <div class="col col-md-6">
